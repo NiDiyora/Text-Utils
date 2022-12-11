@@ -1,25 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+/* import About from "./components/About";
+ */import Navbar from "./components/Navbar";
+import TextForm from "./components/TextForm";
+import React, { useState } from "react";
+import Alert from "./components/Alert";
+/* import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+ */
 function App() {
+  const [mode, setmode] = useState("light");
+  const [alert, setAlert] = useState(null);
+
+  const showAlert = (messege, type) => {
+    setAlert({
+      msg: messege,
+      type: type,
+    });
+    setTimeout(() => {
+      setAlert(null);
+    }, 3000);
+  };
+  const toggleMode = () => {
+    if (mode === "light") {
+      setmode("dark");
+      document.body.style.backgroundColor = "#0d0e51";
+      showAlert("Enable Dark Mode", "success");
+    } else {
+      setmode("light");
+      document.body.style.backgroundColor = "white";
+      showAlert("Disable Dark Mode", "danger");
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+/*     <Router>
+ */     
+ <>
+        <Navbar
+          title="Text Utils"
+          aboutText="about Us"
+          link="solid Link"
+          mode={mode}
+          toggleMode={toggleMode}
+        />
+        <Alert alert={alert} />
+       
+        <div className="container my-3">
+        <TextForm
+                showAlert={showAlert}
+                heading="Enter Text to analyze below"
+                mode={mode}
+              />
+{/*           <Switch>
+ */}           {/*  <Route exact path="/about">
+              <About mode={mode} />
+            </Route> */}
+      {/*       <Route path="/">
+              <TextForm
+                showAlert={showAlert}
+                heading="Enter Text to analyze below"
+                mode={mode}
+              />
+            </Route> */}
+{/*           </Switch>
+ */}        </div>
+      </>
+/*     </Router>
+ */  );
 }
 
 export default App;
